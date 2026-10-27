@@ -1,0 +1,17 @@
+{
+  "name": "codesafe",
+  "version": "1.0.0",
+  "description": "CodeSafe - Blockchain-Based Software Source Code Escrow System",
+  "main": "start.js",
+  "author": "Anika Sharma",
+  "license": "ISC",
+  "scripts": {
+    "start": "node start.js",
+    "compile": "node scripts/compile.js"
+  },
+  "dependencies": {
+    "hardhat": "2.22.17",
+    "ethers": "6.13.4",
+    "solc": "0.8.24"
+  }
+}

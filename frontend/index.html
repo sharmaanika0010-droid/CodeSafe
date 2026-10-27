@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CodeSafe - Source Code Escrow on Blockchain</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <div class="logo">&#128274;</div>
+      <div>
+        <h1>CodeSafe</h1>
+        <p>Blockchain-Based Software Source Code Escrow System</p>
+      </div>
+    </div>
+    <div class="wallet">
+      <label for="walletSelect">Connected Wallet</label>
+      <select id="walletSelect"></select>
+      <div class="wallet-info"><span id="walletAddr">-</span> | Balance: <b id="walletBal">-</b></div>
+    </div>
+  </header>
+
+  <div class="netbar">
+    <span class="dot"></span> <span id="netInfo">Connecting to blockchain...</span>
+    <span class="chaintime">Blockchain time: <b id="chainTime">-</b></span>
+  </div>
+
+  <nav class="tabs">
+    <button data-tab="dashboard" class="active">Dashboard</button>
+    <button data-tab="developer">Developer</button>
+    <button data-tab="client">Client</button>
+    <button data-tab="verify">Verify Code</button>
+  </nav>
+
+  <main>
+    <!-- ============ DASHBOARD ============ -->
+    <section id="tab-dashboard" class="tab active">
+      <div class="stats">
+        <div class="stat"><span id="stTotal">0</span>Total Deals</div>
+        <div class="stat green"><span id="stActive">0</span>Active</div>
+        <div class="stat red"><span id="stInactive">0</span>Developer Inactive</div>
+        <div class="stat blue"><span id="stReleased">0</span>Code Released</div>
+        <div class="stat"><span id="stCompleted">0</span>Completed</div>
+      </div>
+      <div class="card">
+        <h2>All Escrow Deals</h2>
+        <table>
+          <thead><tr><th>#</th><th>Project</th><th>Developer</th><th>Client</th><th>Amount</th><th>Versions</th><th>Next Heartbeat Due</th><th>Status</th></tr></thead>
+          <tbody id="dealsTable"></tbody>
+        </table>
+      </div>
+      <div class="card demo">
+        <h2>&#9200; Time Machine (Demo only)</h2>
+        <p class="muted">On a real blockchain we would wait for days. For the demo, move the blockchain time forward to show what happens when the developer stops sending heartbeats.</p>
+        <div class="row">
+          <input type="number" id="skipDays" value="31" min="1" style="max-width:120px" />
+          <span>days</span>
+          <button class="btn" id="skipBtn">Move Time Forward</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ DEVELOPER ============ -->
+    <section id="tab-developer" class="tab">
+      <div class="card">
+        <h2>Create New Escrow Deal</h2>
+        <div class="grid2">
+          <div><label>Project name</label><input id="dTitle" placeholder="e.g. College ERP System" /></div>
+          <div><label>Client</label><select id="dClient"></select></div>
+          <div><label>Payment amount (ETH)</label><input type="number" id="dAmount" value="2" step="0.1" min="0.01" /></div>
+          <div><label>Heartbeat required every (days)</label><input type="number" id="dDays" value="30" min="1" max="365" /></div>
+        </div>
+        <button class="btn primary" id="createDealBtn">Create Deal on Blockchain</button>
+      </div>
+      <h3 class="sectionh">My Deals (as Developer)</h3>
+      <div id="devDeals"></div>
+    </section>
+
+    <!-- ============ CLIENT ============ -->
+    <section id="tab-client" class="tab">
+      <h3 class="sectionh">My Deals (as Client)</h3>
+      <div id="clientDeals"></div>
+    </section>
+
+    <!-- ============ VERIFY ============ -->
+    <section id="tab-verify" class="tab">
+      <div class="card">
+        <h2>Verify Source Code File</h2>
+        <p class="muted">Upload any source code file (zip). Its SHA-256 fingerprint is compared with all versions saved on the blockchain.</p>
+        <label class="btn primary">Choose File to Verify <input type="file" id="verifyFile" hidden /></label>
+        <div id="verifyResult"></div>
+      </div>
+    </section>
+
+    <div class="card txlog">
+      <h2>Blockchain Transactions</h2>
+      <div id="txLog" class="muted">No transactions yet.</div>
+    </div>
+  </main>
+
+  <div id="toast"></div>
+
+  <script src="lib/ethers.umd.min.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
